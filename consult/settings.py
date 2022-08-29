@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-12qjxh(-5#i#0&k7_^@666=jzaq$-8e6gt9j+zi1$(=u*&y6r*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['209.97.141.47','localhost','127.0.0.1','anish.ideabreed.net','api.ukuniladder.com']
+ALLOWED_HOSTS = ['uniladder-api.herokuapp.com','209.97.141.47','localhost','127.0.0.1','anish.ideabreed.net','api.ukuniladder.com']
 
 APPEND_SLASH=False
 
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -106,7 +107,21 @@ WSGI_APPLICATION = 'consult.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# import dj_database_url
+
+import dj_database_url
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd6qqno2do2aj6s',
+        'USER': 'duisbdlyofqzhw',
+        'PASSWORD': 'dabc4780af610b783f297b161f10112495d99063b78637f1e258979f1d22ec8c',
+        'HOST': 'ec2-34-227-135-211.compute-1.amazonaws.com',
+        'PORT': '5432',
+
+    }
+}
+
 
 # DATABASES = {
 #     'default': {
@@ -124,12 +139,12 @@ WSGI_APPLICATION = 'consult.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
