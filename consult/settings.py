@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import django_heroku
 from pathlib import Path
 
 from consult.jazzmin_settings import *
@@ -245,3 +246,5 @@ EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = '28989e8681cb28'
 EMAIL_HOST_PASSWORD = '4ddcee616d8013'
 EMAIL_PORT = '2525'
+
+django_heroku.settings(locals())
