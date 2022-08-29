@@ -108,19 +108,19 @@ WSGI_APPLICATION = 'consult.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-import dj_database_url
+# import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd6qqno2do2aj6s',
-        'USER': 'duisbdlyofqzhw',
-        'PASSWORD': 'dabc4780af610b783f297b161f10112495d99063b78637f1e258979f1d22ec8c',
-        'HOST': 'ec2-34-227-135-211.compute-1.amazonaws.com',
-        'PORT': '5432',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd6qqno2do2aj6s',
+#         'USER': 'duisbdlyofqzhw',
+#         'PASSWORD': 'dabc4780af610b783f297b161f10112495d99063b78637f1e258979f1d22ec8c',
+#         'HOST': 'ec2-34-227-135-211.compute-1.amazonaws.com',
+#         'PORT': '5432',
 
-    }
-}
+#     }
+# }
 
 
 # DATABASES = {
@@ -139,12 +139,12 @@ DATABASES = {
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
