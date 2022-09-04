@@ -49,6 +49,22 @@ class StudentAPIView(viewsets.ModelViewSet):
         else:
             return StudentSerializer        
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        if request.GET:
+            amount_pay = request.GET.get('amount_paid',None)
+            if amount_pay:
+                if amount_pay == 'Unpaid':
+                    querysetData = queryset.filter(Q(amount_paid__exact='')|Q(amount_paid__exact=0)|Q(amount_paid__isnull=True))
+                    serializer = self.get_serializer(querysetData,many=True)
+                    return Response(serializer.data,status.HTTP_200_OK)
+                serializer = self.get_serializer(queryset,many=True)    
+                return Response(serializer.data,status.HTTP_200_OK)
+            serializer = self.get_serializer(queryset,many=True)    
+            return Response(serializer.data,status.HTTP_200_OK)    
+        serializer = self.get_serializer(queryset,many=True)    
+        return Response(serializer.data,status.HTTP_200_OK)        
+
     def create(self, request, **kwargs):
         if self.request.user.is_active:
             serializer = self.get_serializer(data=request.data)
