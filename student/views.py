@@ -51,19 +51,47 @@ class StudentAPIView(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+
         if request.GET:
             amount_pay = request.GET.get('amount_paid',None)
             if amount_pay:
                 if amount_pay == 'Unpaid':
                     querysetData = queryset.filter(Q(amount_paid__exact='')|Q(amount_paid__exact=0)|Q(amount_paid__isnull=True))
-                    serializer = self.get_serializer(querysetData,many=True)
+                    page = self.paginate_queryset(querysetData)
+                    if page is not None:
+                        serializer = self.get_serializer(page, many=True)
+                        return self.get_paginated_response(serializer.data)
+
+                    serializer = self.get_serializer(queryset, many=True)
+
                     return Response(serializer.data,status.HTTP_200_OK)
-                serializer = self.get_serializer(queryset,many=True)    
+                page = self.paginate_queryset(queryset)
+                if page is not None:
+                    serializer = self.get_serializer(page, many=True)
+                    return self.get_paginated_response(serializer.data)    
                 return Response(serializer.data,status.HTTP_200_OK)
-            serializer = self.get_serializer(queryset,many=True)    
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+            serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data,status.HTTP_200_OK)    
-        serializer = self.get_serializer(queryset,many=True)    
-        return Response(serializer.data,status.HTTP_200_OK)        
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data,status.HTTP_200_OK)
+       
 
     def create(self, request, **kwargs):
         if self.request.user.is_active:
