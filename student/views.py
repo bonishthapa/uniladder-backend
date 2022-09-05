@@ -10,6 +10,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Q
 
 from student.paginations import StudentPaginaition
 
@@ -53,11 +54,6 @@ class StudentAPIView(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
 
         if request.GET:
             amount_pay = request.GET.get('amount_paid',None)
@@ -72,6 +68,16 @@ class StudentAPIView(viewsets.ModelViewSet):
                     serializer = self.get_serializer(queryset, many=True)
 
                     return Response(serializer.data,status.HTTP_200_OK)
+                elif amount_pay == 'Paid':
+                    querysetData = queryset.exclude(Q(amount_paid__exact='')|Q(amount_paid__exact=0)|Q(amount_paid__isnull=True))
+                    page = self.paginate_queryset(querysetData)
+                    if page is not None:
+                        serializer = self.get_serializer(page, many=True)
+                        return self.get_paginated_response(serializer.data)
+
+                    serializer = self.get_serializer(queryset, many=True)
+
+                    return Response(serializer.data,status.HTTP_200_OK)    
                 page = self.paginate_queryset(queryset)
                 if page is not None:
                     serializer = self.get_serializer(page, many=True)
