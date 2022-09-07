@@ -18,6 +18,8 @@ class University(models.Model):
     credibility_qa=models.FileField(upload_to="university",blank=True)
     work_flow=models.FileField(upload_to="university",blank=True)
     bank_detail=models.FileField(upload_to="university",blank=True)
+    application_form=models.FileField(upload_to="university",blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE,related_name='university_created_by',blank=True, null=True)
